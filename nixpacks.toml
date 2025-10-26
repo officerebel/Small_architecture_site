@@ -8,7 +8,7 @@ cmds = [
 ]
 
 [phases.build]
-cmds = ['cd backend && poetry run python manage.py collectstatic --noinput']
+cmds = ['echo "Build phase completed"']
 
 [start]
-cmd = 'cd backend && poetry run python manage.py migrate && poetry run gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT'
+cmd = 'python main.py'
