@@ -4,11 +4,11 @@ nixPkgs = ['python311', 'postgresql', 'poetry']
 [phases.install]
 cmds = [
   'poetry config virtualenvs.create false',
-  'poetry install --only=main --no-dev'
+  'poetry install --only=main --no-dev --no-root'
 ]
 
 [phases.build]
-cmds = ['cd backend && python manage.py collectstatic --noinput']
+cmds = ['cd backend && poetry run python manage.py collectstatic --noinput']
 
 [start]
-cmd = 'cd backend && python manage.py migrate && gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT'
+cmd = 'cd backend && poetry run python manage.py migrate && poetry run gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT'
