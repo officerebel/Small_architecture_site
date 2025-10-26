@@ -17,15 +17,21 @@ def main():
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'portfolio_site.settings')
     
     # Run migrations
-    subprocess.run(['poetry', 'run', 'python', 'manage.py', 'migrate'], check=True)
+    subprocess.run(['python', 'manage.py', 'migrate'], check=True)
+    
+    # Setup initial data
+    try:
+        subprocess.run(['python', 'manage.py', 'setup_initial_data'], check=False)
+    except:
+        print("Initial data setup skipped (may already exist)")
     
     # Collect static files
-    subprocess.run(['poetry', 'run', 'python', 'manage.py', 'collectstatic', '--noinput'], check=True)
+    subprocess.run(['python', 'manage.py', 'collectstatic', '--noinput'], check=True)
     
     # Start the server
     port = os.environ.get('PORT', '8000')
     subprocess.run([
-        'poetry', 'run', 'gunicorn', 
+        'gunicorn', 
         'portfolio_site.wsgi:application',
         '--bind', f'0.0.0.0:{port}'
     ], check=True)
