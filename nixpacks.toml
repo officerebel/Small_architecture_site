@@ -1,8 +1,11 @@
 [phases.setup]
-nixPkgs = ['python311', 'postgresql']
+nixPkgs = ['python311', 'postgresql', 'poetry']
 
 [phases.install]
-cmds = ['cd backend && pip install -r requirements-prod.txt']
+cmds = [
+  'poetry config virtualenvs.create false',
+  'poetry install --only=main --no-dev'
+]
 
 [phases.build]
 cmds = ['cd backend && python manage.py collectstatic --noinput']

@@ -1,18 +1,19 @@
 #!/bin/bash
 
+# Install dependencies with Poetry
+poetry config virtualenvs.create false
+poetry install --only=main --no-dev
+
 # Check if we're in the root directory or backend directory
 if [ -f "backend/manage.py" ]; then
     cd backend
 fi
 
-# Install dependencies
-pip install -r requirements-prod.txt
-
 # Run migrations
-python manage.py migrate
+poetry run python manage.py migrate
 
 # Collect static files
-python manage.py collectstatic --noinput
+poetry run python manage.py collectstatic --noinput
 
 # Start the server
-gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
+poetry run gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
