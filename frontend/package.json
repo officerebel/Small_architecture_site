@@ -1,7 +1,7 @@
 {
   "name": "portfolio-frontend",
   "version": "1.0.0",
-  "description": "Portfolio site frontend with Vue.js and Quasar",
+  "description": "Portfolio site frontend with Vue.js and Vite",
   "type": "module",
   "scripts": {
     "dev": "vite",
