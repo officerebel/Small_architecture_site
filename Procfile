@@ -1,2 +1,2 @@
-web: cd backend && poetry run gunicorn portfolio_site.wsgi:application --bind 0.0.0.0:$PORT
-release: cd backend && poetry run python manage.py collectstatic --noinput && poetry run python manage.py migrate
+web: python main.py
+release: cd backend && python manage.py migrate && python manage.py setup_initial_data
