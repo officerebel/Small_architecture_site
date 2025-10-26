@@ -1,12 +1,11 @@
 [phases.setup]
-nixPkgs = ['nodejs-18_x']
-aptPkgs = ['nodejs', 'npm']
+nixPkgs = ['nodejs-18_x', 'npm-9_x']
 
 [phases.install]
-cmds = ['npm ci --only=production', 'npm install -g serve']
+cmds = ['npm install', 'npm install -g serve']
 
 [phases.build]
 cmds = ['npm run build']
 
 [start]
-cmd = 'serve -s dist -l $PORT'
+cmd = 'serve -s dist -p $PORT'

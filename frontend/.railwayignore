@@ -2,7 +2,11 @@
 pyproject.toml
 poetry.lock
 backend/
-nixpacks.toml
 main.py
 requirements.txt
 runtime.txt
+Procfile
+../nixpacks.toml
+../main.py
+../pyproject.toml
+../poetry.lock
