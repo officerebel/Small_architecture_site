@@ -1,5 +1,5 @@
 [phases.setup]
-nixPkgs = ['python311', 'postgresql', 'poetry']
+nixPkgs = ['python311', 'postgresql', 'sqlite', 'poetry']
 
 [phases.install]
 cmds = [

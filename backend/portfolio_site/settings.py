@@ -68,22 +68,24 @@ TEMPLATES = [
 
 import dj_database_url
 
-# Database configuration
-DATABASE_URL = config('DATABASE_URL', default='')
-if DATABASE_URL:
+# Database configuration - Force PostgreSQL in production
+if config('USE_SQLITE', default=False, cast=bool) and DEBUG:
+    # Only use SQLite in local development
     DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
+        'default': {
+            'ENGINE': 'django.db.backends.sqlite3',
+            'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        }
     }
 else:
-    # Fallback configuration
-    if config('USE_SQLITE', default=True, cast=bool):
+    # Use PostgreSQL in production (Railway provides DATABASE_URL)
+    DATABASE_URL = config('DATABASE_URL', default='')
+    if DATABASE_URL:
         DATABASES = {
-            'default': {
-                'ENGINE': 'django.db.backends.sqlite3',
-                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
-            }
+            'default': dj_database_url.parse(DATABASE_URL)
         }
     else:
+        # Manual PostgreSQL configuration
         DATABASES = {
             'default': {
                 'ENGINE': 'django.db.backends.postgresql',
