@@ -66,23 +66,34 @@ TEMPLATES = [
     },
 ]
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': config('DATABASE_NAME', default='portfolio'),
-        'USER': config('DATABASE_USER', default='postgres'),
-        'PASSWORD': config('DATABASE_PASSWORD', default=''),
-        'HOST': config('DATABASE_HOST', default='localhost'),
-        'PORT': config('DATABASE_PORT', default='5432'),
-    }
-}
+import dj_database_url
 
-# Fallback to SQLite for local development
-if config('USE_SQLITE', default=False, cast=bool):
-    DATABASES['default'] = {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+# Database configuration
+DATABASE_URL = config('DATABASE_URL', default='')
+if DATABASE_URL:
+    DATABASES = {
+        'default': dj_database_url.parse(DATABASE_URL)
     }
+else:
+    # Fallback configuration
+    if config('USE_SQLITE', default=True, cast=bool):
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.sqlite3',
+                'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+            }
+        }
+    else:
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': config('DATABASE_NAME', default='portfolio'),
+                'USER': config('DATABASE_USER', default='postgres'),
+                'PASSWORD': config('DATABASE_PASSWORD', default=''),
+                'HOST': config('DATABASE_HOST', default='localhost'),
+                'PORT': config('DATABASE_PORT', default='5432'),
+            }
+        }
 
 # Wagtail settings
 WAGTAIL_SITE_NAME = "Portfolio Site"

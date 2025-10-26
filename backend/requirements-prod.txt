@@ -7,3 +7,4 @@ python-decouple>=3.8
 psycopg2-binary>=2.9
 gunicorn>=21.2
 whitenoise>=6.5
+dj-database-url>=2.1

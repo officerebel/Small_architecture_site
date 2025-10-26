@@ -14,7 +14,12 @@ class ProjectImageSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         # Fix image URLs to include full backend URL
         if data.get('image') and data['image'].get('url'):
-            data['image']['url'] = f"http://localhost:8002{data['image']['url']}"
+            request = self.context.get('request')
+            if request:
+                data['image']['url'] = request.build_absolute_uri(data['image']['url'])
+            else:
+                # Fallback for local development
+                data['image']['url'] = f"http://localhost:8002{data['image']['url']}"
         return data
 
 
@@ -34,7 +39,12 @@ class ProjectPageSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         # Fix image URLs to include full backend URL
         if data.get('hero_image') and data['hero_image'].get('url'):
-            data['hero_image']['url'] = f"http://localhost:8002{data['hero_image']['url']}"
+            request = self.context.get('request')
+            if request:
+                data['hero_image']['url'] = request.build_absolute_uri(data['hero_image']['url'])
+            else:
+                # Fallback for local development
+                data['hero_image']['url'] = f"http://localhost:8002{data['hero_image']['url']}"
         return data
 
 
@@ -55,7 +65,12 @@ class AboutPageSerializer(serializers.ModelSerializer):
         data = super().to_representation(instance)
         # Fix image URLs to include full backend URL
         if data.get('profile_image') and data['profile_image'].get('url'):
-            data['profile_image']['url'] = f"http://localhost:8002{data['profile_image']['url']}"
+            request = self.context.get('request')
+            if request:
+                data['profile_image']['url'] = request.build_absolute_uri(data['profile_image']['url'])
+            else:
+                # Fallback for local development
+                data['profile_image']['url'] = f"http://localhost:8002{data['profile_image']['url']}"
         return data
 
 
