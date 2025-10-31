@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Portfolio CMS{% endblock %}</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; }
+        .headless-cms-notice { 
+            background: #f0f8ff; 
+            padding: 20px; 
+            border-radius: 8px; 
+            border-left: 4px solid #007cba;
+        }
+        ul { margin: 20px 0; }
+        li { margin: 5px 0; }
+        a { color: #007cba; }
+    </style>
+</head>
+<body>
+    {% block content %}{% endblock %}
+</body>
+</html>

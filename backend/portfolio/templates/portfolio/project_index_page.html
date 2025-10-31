@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="headless-cms-notice">
+    <h1>{{ page.title }}</h1>
+    <div>{{ page.intro|richtext }}</div>
+    <p><strong>This is a headless CMS.</strong> Please use the API endpoints:</p>
+    <ul>
+        <li><a href="/api/v2/pages/">Pages API</a></li>
+        <li><a href="/api/v2/images/">Images API</a></li>
+        <li><a href="/cms/">Admin Panel</a></li>
+    </ul>
+</div>
+{% endblock %}

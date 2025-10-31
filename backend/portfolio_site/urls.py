@@ -5,9 +5,12 @@ from django.conf.urls.static import static
 from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
 
+from .api import api_router
+
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
+    path('api/v2/', api_router.urls),
     path('api/', include('portfolio.api_urls')),
     path('', include(wagtail_urls)),
 ]

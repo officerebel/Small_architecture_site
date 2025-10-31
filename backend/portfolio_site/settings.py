@@ -15,6 +15,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     
+    # Wagtail apps
     'wagtail.contrib.forms',
     'wagtail.contrib.redirects',
     'wagtail.embeds',
@@ -27,11 +28,16 @@ INSTALLED_APPS = [
     'wagtail.admin',
     'wagtail',
     
+    # Wagtail API
+    'wagtail.api.v2',
+    
+    # Third party apps
     'modelcluster',
     'taggit',
     'rest_framework',
     'corsheaders',
     
+    # Local apps
     'portfolio',
 ]
 
@@ -120,6 +126,9 @@ REST_FRAMEWORK = {
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
     'PAGE_SIZE': 20
 }
+
+# Wagtail API settings
+WAGTAILAPI_BASE_URL = config('WAGTAILADMIN_BASE_URL', default='http://localhost:8002')
 # Static files (CSS, JavaScript, Images)
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
