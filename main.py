@@ -2,6 +2,7 @@
 """
 Portfolio Site - Django/Wagtail Application
 Entry point for Railway deployment
+Updated: 2025-10-31
 """
 
 import os
