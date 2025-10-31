@@ -5,7 +5,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here-change-in-production')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
+ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -119,6 +119,8 @@ CORS_ALLOWED_ORIGINS = [
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
+    # Temporarily allow all origins for debugging
+    CORS_ALLOW_ALL_ORIGINS = True
     CORS_ALLOWED_ORIGINS.extend(config('ADDITIONAL_CORS_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]))
 
 # REST Framework
