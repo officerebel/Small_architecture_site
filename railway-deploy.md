@@ -3,6 +3,7 @@
 ## 🚂 Deploy to Railway
 
 ### Option 1: One-Click Deploy (Recommended)
+
 [![Deploy on Railway](https://railway.app/button.svg)](https://railway.app/template/django)
 
 ### Option 2: Manual Deploy
@@ -35,11 +36,13 @@ ADDITIONAL_CORS_ORIGINS=https://your-frontend-app.vercel.app
 ```
 
 ### 📦 Add PostgreSQL Database:
+
 1. In Railway dashboard, click **"+ New"**
 2. Select **"Database"** → **"PostgreSQL"**
 3. Railway will automatically set DATABASE_URL
 
 ### 🎯 After Deployment:
+
 1. **Create superuser**: In Railway terminal run:
    ```bash
    python manage.py setup_initial_data
@@ -48,6 +51,7 @@ ADDITIONAL_CORS_ORIGINS=https://your-frontend-app.vercel.app
 3. **Login**: admin / changeme123 (change this!)
 
 ### 🔗 Your Backend URLs:
+
 - **API**: `https://your-app-name.up.railway.app/api/`
 - **Admin**: `https://your-app-name.up.railway.app/cms/`
 - **Django Admin**: `https://your-app-name.up.railway.app/admin/`
