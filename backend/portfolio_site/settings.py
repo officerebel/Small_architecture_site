@@ -58,6 +58,12 @@ MIDDLEWARE = [
     'wagtail.contrib.redirects.middleware.RedirectMiddleware',
 ]
 
+# CSRF exemptions for API endpoints
+CSRF_COOKIE_SECURE = not DEBUG
+CSRF_COOKIE_SAMESITE = 'Lax'
+SESSION_COOKIE_SECURE = not DEBUG
+SESSION_COOKIE_SAMESITE = 'Lax'
+
 ROOT_URLCONF = 'portfolio_site.urls'
 
 TEMPLATES = [
@@ -136,12 +142,28 @@ CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:9000",
 ]
 
+# CORS settings
+CORS_ALLOW_ALL_ORIGINS = True
+CORS_ALLOW_CREDENTIALS = True
+
+# CSRF settings for API
+CSRF_TRUSTED_ORIGINS = [
+    'https://smallachitecture-production.up.railway.app',
+    'https://*.up.railway.app',
+    'https://*.vercel.app',
+    'http://localhost:9000',
+    'http://127.0.0.1:9000',
+]
+
 # Allow CORS for all origins in development
 if DEBUG:
     CORS_ALLOW_ALL_ORIGINS = True
 else:
-    # Temporarily allow all origins for debugging
-    CORS_ALLOW_ALL_ORIGINS = True
+    CORS_ALLOWED_ORIGINS = [
+        'https://smallachitecture-production.up.railway.app',
+        'https://*.vercel.app',
+        'http://localhost:9000',
+    ]
     CORS_ALLOWED_ORIGINS.extend(config('ADDITIONAL_CORS_ORIGINS', default='', cast=lambda v: [s.strip() for s in v.split(',') if s.strip()]))
 
 # REST Framework
