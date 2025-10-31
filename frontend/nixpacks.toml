@@ -2,13 +2,10 @@
 nixPkgs = ['nodejs_18']
 
 [phases.install]
-cmds = ['npm ci --only=production']
+cmds = ['npm install']
 
 [phases.build]
-cmds = [
-  'npm install --save-dev vite @vitejs/plugin-vue',
-  'npm run build'
-]
+cmds = ['npm run build']
 
 [start]
-cmd = './start.sh'
+cmd = 'npx serve dist -s -p $PORT'
