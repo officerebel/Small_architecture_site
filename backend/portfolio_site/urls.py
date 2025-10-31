@@ -6,8 +6,10 @@ from wagtail.admin import urls as wagtailadmin_urls
 from wagtail import urls as wagtail_urls
 
 from .api import api_router
+from .health import health_check
 
 urlpatterns = [
+    path('health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
     path('api/v2/', api_router.urls),
