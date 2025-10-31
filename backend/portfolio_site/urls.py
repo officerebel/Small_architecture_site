@@ -7,14 +7,16 @@ from wagtail import urls as wagtail_urls
 
 from .api import api_router
 from .health import health_check
+from .views import root_view
 
 urlpatterns = [
+    path('', root_view, name='root'),
     path('health/', health_check, name='health_check'),
     path('admin/', admin.site.urls),
     path('cms/', include(wagtailadmin_urls)),
     path('api/v2/', api_router.urls),
     path('api/', include('portfolio.api_urls')),
-    path('', include(wagtail_urls)),
+    path('pages/', include(wagtail_urls)),
 ]
 
 if settings.DEBUG:

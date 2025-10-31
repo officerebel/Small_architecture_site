@@ -5,7 +5,11 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 SECRET_KEY = config('SECRET_KEY', default='your-secret-key-here-change-in-production')
 DEBUG = config('DEBUG', default=False, cast=bool)
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='*', cast=lambda v: [s.strip() for s in v.split(',')])
+# Handle Railway deployment
+if 'RAILWAY_ENVIRONMENT' in os.environ:
+    ALLOWED_HOSTS = ['*']  # Allow all hosts in Railway
+else:
+    ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='localhost,127.0.0.1', cast=lambda v: [s.strip() for s in v.split(',')])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -77,11 +81,28 @@ import dj_database_url
 # Database configuration
 DATABASE_URL = config('DATABASE_URL', default='')
 
-if DATABASE_URL:
+if DATABASE_URL and DATABASE_URL != '':
     # Use DATABASE_URL (Railway or local)
-    DATABASES = {
-        'default': dj_database_url.parse(DATABASE_URL)
-    }
+    try:
+        DATABASES = {
+            'default': dj_database_url.parse(DATABASE_URL)
+        }
+        # Ensure SSL is disabled for Railway internal connections
+        if 'railway.internal' in DATABASE_URL:
+            DATABASES['default']['OPTIONS'] = {'sslmode': 'disable'}
+    except Exception as e:
+        print(f"Error parsing DATABASE_URL: {e}")
+        # Fallback to default
+        DATABASES = {
+            'default': {
+                'ENGINE': 'django.db.backends.postgresql',
+                'NAME': 'railway',
+                'USER': 'postgres',
+                'PASSWORD': 'password',
+                'HOST': 'localhost',
+                'PORT': '5432',
+            }
+        }
 else:
     # Use individual database settings
     DATABASES = {
@@ -91,7 +112,7 @@ else:
             'USER': config('DATABASE_USER', default='postgres'),
             'PASSWORD': config('DATABASE_PASSWORD', default='postgres123'),
             'HOST': config('DATABASE_HOST', default='localhost'),
-            'PORT': config('DATABASE_PORT', default='5432'),
+            'PORT': config('DATABASE_PORT', default='5433'),
         }
     }
 
